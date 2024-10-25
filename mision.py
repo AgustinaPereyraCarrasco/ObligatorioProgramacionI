@@ -1,10 +1,10 @@
 class Mision:
-    def __init__(self, nombre, rango, recompensa, es_grupal, min_miembros=1):
+    def __init__(self, nombre, rango, recompensa, tipo_mision, min_miembros=1):
         """Inicializa los atributos de una Misión"""
         self.nombre = nombre
         self.rango = rango
         self.recompensa = recompensa
-        self.es_grupal = es_grupal
+        self.tipo_mision = tipo_mision
         self.min_miembros = min_miembros
         self.completada = False
 
@@ -65,9 +65,9 @@ def registrar_mision():
         nombre = input("Ingrese el nombre de la misión: ")
         rango = int(input("Ingrese el rango de la misión (1-5): "))
         recompensa = float(input("Ingrese la recompensa: "))
-        es_grupal = input("¿Es misión grupal? (S/N): ").upper()
+        tipo_mision = input("¿Es misión grupal? (S/N): ").upper()
         
-        if es_grupal == "S":
+        if tipo_mision == "S":
             min_miembros = int(input("Ingrese el mínimo de miembros para la misión: "))
             mision = Mision(nombre, rango, recompensa, True, min_miembros)
         else:
@@ -124,24 +124,6 @@ def realizar_mision():
     except ValueError as e:
         print(f"Error: {e}")
 
-def consultar_aventureros_misiones():
-    """Función que muestra el Top 10 aventureros con más misiones completadas"""
-    top_aventureros = sorted(gremio, key=lambda a: (-a.misiones_completadas, a.nombre))[:10]
-    for aventurero in top_aventureros:
-        print(f"{aventurero.nombre}: {aventurero.misiones_completadas} misiones completadas")
-
-def consultar_aventureros_habilidad():
-    """Función que muestra el Top 10 aventureros con mayor habilidad"""
-    top_aventureros = sorted(gremio, key=lambda a: (-a.calcular_habilidad_total(), a.nombre))[:10]
-    for aventurero in top_aventureros:
-        print(f"{aventurero.nombre}: Habilidad total {aventurero.calcular_habilidad_total()}")
-
-def consultar_misiones_recompensa():
-    """Función que muestra el Top 5 misiones con mayor recompensa"""
-    top_misiones = sorted(misiones, key=lambda m: -m.recompensa)[:5]
-    for mision in top_misiones:
-        print(f"{mision.nombre}: Recompensa {mision.recompensa}")
-
 def menu_principal():
     """Menú principal del simulador de gremio de aventureros"""
     while True:
@@ -161,7 +143,7 @@ def menu_principal():
             case "3":
                 realizar_mision()
             case "4":
-                menu_consultas()
+                otras_consultas()
             case "5":
                 print("Saliendo... Muchas Gracias por Jugar")
                 break
